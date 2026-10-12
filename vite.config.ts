@@ -6,31 +6,44 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig(() => {
   return {
+    // GitHub Pages: gunakan nama repository sebagai base path.
+    // VITE_BASE dapat diatur pada GitHub Actions.
+    base: process.env.VITE_BASE || '/',
+
     plugins: [
       react(),
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['icon-512.png', 'logo.png', 'maria.png', 'andi.png', 'boris.png', 'ajeng.png', 'lestari.png'],
+        includeAssets: [
+          'icon-512.png',
+          'logo.png',
+          'maria.png',
+          'andi.png',
+          'boris.png',
+          'ajeng.png',
+          'lestari.png',
+        ],
         manifest: {
-          id: '/',
+          id: './',
           name: 'GAMBRENG - Ayo Belajar Bareng!',
           short_name: 'GAMBRENG',
-          description: 'Board game edukasi digital Kurikulum Merdeka untuk siswa kelas 4 SD.',
+          description:
+            'Board game edukasi digital Kurikulum Merdeka untuk siswa kelas 4 SD.',
           theme_color: '#f97316',
           background_color: '#fffbeb',
           display: 'standalone',
-          start_url: '/',
-          scope: '/',
+          start_url: './',
+          scope: './',
           icons: [
             {
-              src: '/icon-512.png',
+              src: 'icon-512.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'any',
             },
             {
-              src: '/icon-512.png',
+              src: 'icon-512.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'maskable',
@@ -82,7 +95,7 @@ export default defineConfig(() => {
       },
     },
     server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
+      // HMR is disabled in AI Studio via DISABLE_HMR env VAR.
       // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
