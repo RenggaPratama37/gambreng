@@ -19,6 +19,8 @@ import { GameBoardScreen } from './components/screens/GameBoardScreen';
 import { PodiumScreen } from './components/screens/PodiumScreen';
 import { CertificateScreen } from './components/screens/CertificateScreen';
 import { FinalScreen } from './components/screens/FinalScreen';
+import { kirimKunjungan, kirimAntrian, simpanSesi } from './lib/api';
+
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<ScreenState>('cover');
@@ -45,6 +47,11 @@ export default function App() {
   };
 
   useEffect(() => {
+    kirimKunjungan();
+    kirimAntrian();
+  }, []);
+
+  useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -69,6 +76,14 @@ export default function App() {
     setGamePlayers(finalPlayers);
     setPlayDurationSec(durationSec);
     setCurrentScreen('podium');
+
+    simpanSesi({
+      classCode: schoolName,
+      subject: selectedSubject.name,
+      timeMode,
+      elapsedSeconds: durationSec,
+      players: finalPlayers,
+    });
   };
 
   return (
