@@ -149,7 +149,7 @@ export const CoverScreen: React.FC<CoverScreenProps> = ({ onNext }) => {
                   {/* Character Image Element standing on path with ground shadow */}
                   <div className="h-28 sm:h-36 w-16 sm:w-24 flex items-end justify-center filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.32)] overflow-visible">
                     <img
-                      src={`/${char.fileName}`}
+                      src={`${import.meta.env.BASE_URL}${char.fileName}`}
                       alt={char.name}
                       className="h-full w-auto max-w-none object-contain object-bottom origin-bottom transition-transform group-hover:scale-110"
                       style={{

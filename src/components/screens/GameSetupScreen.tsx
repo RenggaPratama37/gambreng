@@ -381,7 +381,7 @@ export const GameSetupScreen: React.FC<GameSetupScreenProps> = ({
                                 const visual = getCharacterVisual(char.fileName);
                                 return (
                                   <img
-                                    src={`/${char.fileName}`}
+                                    src={`${import.meta.env.BASE_URL}${char.fileName}`}
                                     alt={char.name}
                                     className="h-full w-auto max-w-none object-contain object-bottom origin-bottom transition-transform"
                                     style={{
