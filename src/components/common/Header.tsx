@@ -80,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="h-9 w-28 sm:h-11 sm:w-36 flex items-center justify-center">
               {!logoError ? (
                 <img
-                  src="/logo.png"
+                  src={`${import.meta.env.BASE_URL}logo.png`}
                   alt="GAMBRENG"
                   className="max-h-full max-w-full object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
                   onLoad={() => setLogoError(false)}

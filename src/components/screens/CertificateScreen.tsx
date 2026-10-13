@@ -308,7 +308,7 @@ export const CertificateScreen: React.FC<CertificateScreenProps> = ({
           <div className="flex flex-col items-center">
             <div className="bg-amber-50/90 rounded-2xl px-6 py-2 border-2 border-amber-300 shadow-sm flex items-center justify-center">
               <img
-                src="/logo.png"
+                src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="GAMBRENG"
                 className="h-16 max-w-xs object-contain"
                 onError={(e) => {
@@ -419,7 +419,7 @@ export const CertificateScreen: React.FC<CertificateScreenProps> = ({
             <div className="flex flex-col items-center">
               <div className="bg-amber-50 rounded-2xl px-6 py-2 border-2 border-amber-300">
                 <img
-                  src="/logo.png"
+                  src={`${import.meta.env.BASE_URL}logo.png`}
                   alt="GAMBRENG"
                   className="h-16 max-w-xs object-contain"
                   onError={(e) => {

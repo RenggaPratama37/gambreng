@@ -19,12 +19,12 @@ export const CharacterAvatar: React.FC<CharacterAvatarProps> = ({
   isCropCircle = true,
 }) => {
   const cleanName = (fileName || 'maria.png').replace(/^\/+/, '');
-  const [imgSrc, setImgSrc] = useState<string>(`/${cleanName}`);
+  const [imgSrc, setImgSrc] = useState<string>(`${import.meta.env.BASE_URL}${cleanName}`);
   const [loadError, setLoadError] = useState<boolean>(false);
 
   useEffect(() => {
     const clean = (fileName || 'maria.png').replace(/^\/+/, '');
-    setImgSrc(`/${clean}`);
+    setImgSrc(`${import.meta.env.BASE_URL}${clean}`);
     setLoadError(false);
   }, [fileName]);
 

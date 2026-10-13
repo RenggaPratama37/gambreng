@@ -104,7 +104,7 @@ export const CoverScreen: React.FC<CoverScreenProps> = ({ onNext }) => {
             }}
           >
             <img
-              src="/logo.png"
+              src={`${import.meta.env.BASE_URL}logo.png`}
               alt="GAMBRENG - Ayo Belajar Bareng!"
               className="relative z-10 w-full max-h-48 sm:max-h-64 object-contain mx-auto filter drop-shadow-[0_20px_26px_rgba(0,0,0,0.34)] drop-shadow-[0_6px_0_rgba(194,65,12,0.48)] drop-shadow-[0_-1px_3px_rgba(255,255,255,0.85)] transition-all duration-300"
               onLoad={() => {

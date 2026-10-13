@@ -14,15 +14,15 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         includeAssets: ['icon-512.png', 'logo.png', 'maria.png', 'andi.png', 'boris.png', 'ajeng.png', 'lestari.png', 'background.png', 'background-night.png'],
         manifest: {
-          id: '/',
+          id: './',
           name: 'GAMBRENG - Ayo Belajar Bareng!',
           short_name: 'GAMBRENG',
           description: 'Board game edukasi digital Kurikulum Merdeka untuk siswa kelas 4 SD.',
           theme_color: '#f97316',
           background_color: '#fffbeb',
           display: 'standalone',
-          start_url: '/',
-          scope: '/',
+          start_url: './',
+          scope: './',
           icons: [
             {
               src: 'icon-512.png',
