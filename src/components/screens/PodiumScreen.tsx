@@ -94,21 +94,21 @@ export const PodiumScreen: React.FC<PodiumScreenProps> = ({
     <div className="relative min-h-[calc(100vh-80px)] p-4 max-w-2xl mx-auto flex flex-col items-center justify-between pb-8">
       {/* Title */}
       <div className="text-center mb-6">
-        <div className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-amber-400 text-amber-950 font-black text-xs uppercase mb-2 shadow-sm animate-pulse">
-          <Trophy className="w-4 h-4" />
+        <div className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-gradient-to-r from-amber-400 to-yellow-400 text-amber-950 font-black text-xs uppercase mb-2 shadow-sm border border-amber-300 animate-pulse">
+          <Trophy className="w-4 h-4 text-amber-900" />
           <span>Selamat Kepada Seluruh Juara!</span>
         </div>
-        <h2 className="font-heading text-3xl sm:text-4xl font-black text-slate-800 dark:text-white">
+        <h2 className="font-heading text-3xl sm:text-4xl font-black text-amber-950 dark:text-amber-100 drop-shadow-xs">
           Urutan Juara GAMBRENG
         </h2>
-        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
+        <p className="text-xs sm:text-sm text-amber-800/80 dark:text-amber-300/80 font-bold">
           Mata Pelajaran: {subject.name}
         </p>
       </div>
 
       {/* Podium Display (Top 3 bouncing in) */}
       <div className="w-full flex items-end justify-center gap-2 sm:gap-4 my-4 px-2">
-        {/* Juara 2 (Left) */}
+        {/* Juara 2 (Left - Bambu Hijau Alam) */}
         {top2 && (
           <div className="flex-1 flex flex-col items-center animate-bounce" style={{ animationDuration: '2.5s' }}>
             <CharacterAvatar
@@ -118,23 +118,23 @@ export const PodiumScreen: React.FC<PodiumScreenProps> = ({
               ringColor={top2.color}
               className="mb-2 shadow-lg"
             />
-            <span className="font-heading font-black text-xs sm:text-sm text-slate-800 dark:text-white truncate max-w-[90px] text-center">
+            <span className="font-heading font-black text-xs sm:text-sm text-amber-950 dark:text-amber-100 truncate max-w-[90px] text-center">
               {top2.nickname}
             </span>
-            <span className="text-[10px] font-bold text-slate-500">★ {top2.score} Poin</span>
+            <span className="text-[10px] font-black text-emerald-700 dark:text-emerald-300">★ {top2.score} Poin</span>
             {/* Step 2 */}
-            <div className="w-full h-24 sm:h-28 bg-gradient-to-t from-slate-300 to-slate-200 dark:from-slate-700 dark:to-slate-600 rounded-t-2xl flex flex-col items-center justify-center border-t-4 border-slate-400 shadow-md">
-              <span className="font-heading font-black text-2xl sm:text-3xl text-slate-700 dark:text-slate-200">
+            <div className="w-full h-24 sm:h-28 bg-gradient-to-t from-emerald-500 to-teal-400 rounded-t-2xl flex flex-col items-center justify-center border-t-4 border-emerald-600 shadow-lg text-emerald-950">
+              <span className="font-heading font-black text-2xl sm:text-3xl text-emerald-950">
                 2
               </span>
-              <span className="text-[9px] font-black uppercase text-slate-600 dark:text-slate-300">
+              <span className="text-[9px] font-black uppercase tracking-wider text-emerald-950">
                 Juara 2
               </span>
             </div>
           </div>
         )}
 
-        {/* Juara 1 (Center - Tallest) */}
+        {/* Juara 1 (Center - Padi Emas Mentari) */}
         {top1 && (
           <div className="flex-1 flex flex-col items-center animate-bounce z-10" style={{ animationDuration: '2.1s' }}>
             <div className="relative">
@@ -149,23 +149,23 @@ export const PodiumScreen: React.FC<PodiumScreenProps> = ({
                 className="mb-2 shadow-xl border-4 border-amber-400"
               />
             </div>
-            <span className="font-heading font-black text-sm sm:text-base text-slate-900 dark:text-white truncate max-w-[100px] text-center">
+            <span className="font-heading font-black text-sm sm:text-base text-amber-950 dark:text-amber-100 truncate max-w-[100px] text-center">
               {top1.nickname}
             </span>
-            <span className="text-xs font-black text-amber-600 dark:text-amber-400">★ {top1.score} Poin</span>
+            <span className="text-xs font-black text-amber-700 dark:text-amber-300">★ {top1.score} Poin</span>
             {/* Step 1 */}
-            <div className="w-full h-32 sm:h-36 bg-gradient-to-t from-amber-400 to-yellow-300 rounded-t-2xl flex flex-col items-center justify-center border-t-4 border-amber-500 shadow-xl">
+            <div className="w-full h-32 sm:h-36 bg-gradient-to-t from-amber-400 to-yellow-300 rounded-t-2xl flex flex-col items-center justify-center border-t-4 border-amber-500 shadow-xl text-amber-950">
               <span className="font-heading font-black text-3xl sm:text-4xl text-amber-950">
                 1
               </span>
-              <span className="text-[10px] font-black uppercase text-amber-900">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-900">
                 Juara 1
               </span>
             </div>
           </div>
         )}
 
-        {/* Juara 3 (Right) */}
+        {/* Juara 3 (Right - Tanah Liat / Jerami Hangat) */}
         {top3 && (
           <div className="flex-1 flex flex-col items-center animate-bounce" style={{ animationDuration: '2.8s' }}>
             <CharacterAvatar
@@ -175,16 +175,16 @@ export const PodiumScreen: React.FC<PodiumScreenProps> = ({
               ringColor={top3.color}
               className="mb-2 shadow-lg"
             />
-            <span className="font-heading font-black text-xs sm:text-sm text-slate-800 dark:text-white truncate max-w-[90px] text-center">
+            <span className="font-heading font-black text-xs sm:text-sm text-amber-950 dark:text-amber-100 truncate max-w-[90px] text-center">
               {top3.nickname}
             </span>
-            <span className="text-[10px] font-bold text-slate-500">★ {top3.score} Poin</span>
+            <span className="text-[10px] font-black text-orange-700 dark:text-orange-300">★ {top3.score} Poin</span>
             {/* Step 3 */}
-            <div className="w-full h-18 sm:h-20 bg-gradient-to-t from-amber-700 to-amber-600 text-white rounded-t-2xl flex flex-col items-center justify-center border-t-4 border-amber-800 shadow-md">
-              <span className="font-heading font-black text-2xl text-amber-100">
+            <div className="w-full h-18 sm:h-20 bg-gradient-to-t from-orange-400 to-amber-500 text-orange-950 rounded-t-2xl flex flex-col items-center justify-center border-t-4 border-orange-600 shadow-md">
+              <span className="font-heading font-black text-2xl text-orange-950">
                 3
               </span>
-              <span className="text-[9px] font-black uppercase text-amber-200">
+              <span className="text-[9px] font-black uppercase tracking-wider text-orange-950">
                 Juara 3
               </span>
             </div>
@@ -193,9 +193,9 @@ export const PodiumScreen: React.FC<PodiumScreenProps> = ({
       </div>
 
       {/* Ranked List of All Players */}
-      <div className="w-full bg-white/95 dark:bg-slate-900/95 rounded-3xl p-4 sm:p-5 shadow-xl border-3 border-amber-300 dark:border-slate-800 my-4 space-y-2.5">
-        <h3 className="font-heading font-black text-sm text-slate-800 dark:text-white mb-2">
-          Daftar Lengkap Peserta & Lencana:
+      <div className="w-full bg-gradient-to-b from-white/95 via-amber-50/90 to-yellow-50/95 dark:bg-gradient-to-b dark:from-[#3a2d1d]/95 dark:via-[#423420]/95 dark:to-[#2e2316]/95 rounded-3xl p-4 sm:p-5 shadow-xl border-3 border-amber-300 dark:border-amber-500 my-4 space-y-2.5">
+        <h3 className="font-heading font-black text-sm sm:text-base text-amber-950 dark:text-amber-100 mb-2.5">
+          🌾 Daftar Lengkap Peserta & Lencana:
         </h3>
         {players.map((player, idx) => {
           const badge = getBadgeForPlayer(player, idx);
@@ -203,10 +203,10 @@ export const PodiumScreen: React.FC<PodiumScreenProps> = ({
           return (
             <div
               key={player.id}
-              className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700"
+              className="flex items-center justify-between p-3.5 rounded-2xl bg-white/90 dark:bg-[#4d3c26] border-2 border-amber-200 dark:border-amber-600/80 shadow-xs"
             >
               <div className="flex items-center gap-3">
-                <span className="font-heading font-black text-base w-6 text-center text-slate-600 dark:text-slate-300">
+                <span className="font-heading font-black text-base w-6 text-center text-amber-800 dark:text-amber-300">
                   #{idx + 1}
                 </span>
                 <CharacterAvatar
@@ -216,13 +216,13 @@ export const PodiumScreen: React.FC<PodiumScreenProps> = ({
                   ringColor={player.color}
                 />
                 <div>
-                  <h4 className="font-heading font-black text-sm text-slate-800 dark:text-white">
+                  <h4 className="font-heading font-black text-sm sm:text-base text-amber-950 dark:text-amber-100">
                     {player.nickname}
                   </h4>
-                  <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                  <div className="flex items-center gap-2 text-xs text-amber-800/80 dark:text-amber-200 font-bold">
                     <span>{isJuara ? `Juara ${idx + 1}` : 'Sahabat Belajar'}</span>
                     <span>•</span>
-                    <span className="text-amber-600 font-bold">★ {player.score} Poin</span>
+                    <span className="text-amber-600 dark:text-amber-400 font-black">★ {player.score} Poin</span>
                     <span>•</span>
                     <span>Petak {player.currentTile}</span>
                   </div>
@@ -270,7 +270,7 @@ export const PodiumScreen: React.FC<PodiumScreenProps> = ({
             audio.playClick();
             onNavigateFinal();
           }}
-          className="btn-chunky px-6 py-4 rounded-2xl bg-white dark:bg-slate-800 hover:bg-slate-50 text-slate-800 dark:text-white font-heading font-black text-sm border-2 border-slate-300 dark:border-slate-700 shadow-[0_4px_0_#cbd5e1]"
+          className="btn-chunky px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-heading font-black text-sm border-2 border-emerald-300 shadow-[0_4px_0_#065f46] cursor-pointer"
         >
           <span>Halaman Akhir →</span>
         </button>

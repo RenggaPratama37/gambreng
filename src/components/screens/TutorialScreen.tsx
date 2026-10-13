@@ -90,8 +90,8 @@ export const TutorialScreen: React.FC<TutorialScreenProps> = ({
   const step = STEPS[currentStep];
 
   return (
-    <div className="relative min-h-[calc(100vh-80px)] flex flex-col items-center justify-center p-4 max-w-xl mx-auto">
-      <div className="w-full bg-white/95 dark:bg-slate-900/95 rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-300 dark:border-amber-500/50 backdrop-blur-sm">
+    <div className="relative min-h-[calc(100vh-80px)] flex flex-col items-center justify-center p-4 max-w-xl mx-auto select-none">
+      <div className="w-full bg-gradient-to-b from-white/95 via-[#fefbf0]/95 to-[#fef3c7]/95 dark:bg-gradient-to-b dark:from-[#3a2d1d]/95 dark:via-[#423420]/95 dark:to-[#2e2316]/95 rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 dark:border-amber-500 backdrop-blur-md">
         {/* Top header with step count */}
         <div className="flex items-center justify-between mb-4">
           <span className={`px-3 py-1 rounded-full text-xs font-black border ${step.badgeColor}`}>
@@ -99,7 +99,7 @@ export const TutorialScreen: React.FC<TutorialScreenProps> = ({
           </span>
           <button
             onClick={onBackMenu}
-            className="text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 underline"
+            className="text-xs font-bold text-amber-800 hover:text-amber-950 dark:text-amber-300 underline cursor-pointer"
           >
             Kembali ke Menu
           </button>
@@ -107,19 +107,19 @@ export const TutorialScreen: React.FC<TutorialScreenProps> = ({
 
         {/* Carousel Content */}
         <div className="text-center py-4">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-3xl bg-amber-100 dark:bg-slate-800 border-3 border-amber-300 dark:border-amber-500/50 flex items-center justify-center text-4xl sm:text-5xl shadow-inner mb-4 animate-bounce" style={{ animationDuration: '3s' }}>
+          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-3xl bg-amber-100 dark:bg-[#4d3c26] border-3 border-amber-300 dark:border-amber-600 flex items-center justify-center text-4xl sm:text-5xl shadow-md mb-4 animate-bounce" style={{ animationDuration: '3s' }}>
             {step.icon}
           </div>
 
-          <h2 className="font-heading text-xl sm:text-2xl font-black text-slate-800 dark:text-white mb-3">
+          <h2 className="font-heading text-xl sm:text-2xl font-black text-amber-950 dark:text-amber-100 mb-3">
             {step.title}
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-4 leading-relaxed font-medium">
+          <p className="text-sm sm:text-base text-amber-800/90 dark:text-amber-200/90 mb-4 leading-relaxed font-bold">
             {step.description}
           </p>
 
-          <div className="inline-block px-4 py-2 rounded-2xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-xs sm:text-sm font-bold text-amber-900 dark:text-amber-200">
+          <div className="inline-block px-4 py-2 rounded-2xl bg-amber-100/80 dark:bg-[#4d3c26] border-2 border-amber-300 dark:border-amber-600 text-xs sm:text-sm font-bold text-amber-950 dark:text-amber-100 shadow-xs">
             💡 {step.highlight}
           </div>
         </div>
@@ -133,8 +133,8 @@ export const TutorialScreen: React.FC<TutorialScreenProps> = ({
                 audio.playClick();
                 setCurrentStep(i);
               }}
-              className={`h-3 rounded-full transition-all ${
-                i === currentStep ? 'w-8 bg-amber-500' : 'w-3 bg-slate-200 dark:bg-slate-700'
+              className={`h-3 rounded-full transition-all cursor-pointer ${
+                i === currentStep ? 'w-8 bg-amber-500' : 'w-3 bg-amber-200 dark:bg-[#5a462d]'
               }`}
               title={`Langkah ${i + 1}`}
             />
@@ -148,8 +148,8 @@ export const TutorialScreen: React.FC<TutorialScreenProps> = ({
             disabled={currentStep === 0}
             className={`btn-chunky flex items-center gap-1.5 px-4 py-3 rounded-2xl font-heading font-black text-sm border-2 ${
               currentStep === 0
-                ? 'opacity-40 cursor-not-allowed bg-slate-100 text-slate-400 border-slate-200'
-                : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-300 shadow-[0_4px_0_#cbd5e1]'
+                ? 'opacity-40 cursor-not-allowed bg-amber-100/40 text-amber-700/60 border-amber-200'
+                : 'bg-white dark:bg-[#4d3c26] hover:bg-amber-50 text-amber-950 dark:text-amber-100 border-amber-300 dark:border-amber-600 shadow-[0_4px_0_#d97706] cursor-pointer'
             }`}
           >
             <ChevronLeft className="w-5 h-5" />
@@ -158,7 +158,7 @@ export const TutorialScreen: React.FC<TutorialScreenProps> = ({
 
           <button
             onClick={handleNext}
-            className="btn-chunky flex items-center justify-center gap-2 flex-1 px-5 py-3 rounded-2xl font-heading font-black text-base sm:text-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-[0_6px_0_#c2410c] border border-amber-300"
+            className="btn-chunky flex items-center justify-center gap-2 flex-1 px-5 py-3 rounded-2xl font-heading font-black text-base sm:text-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-[0_6px_0_#c2410c] border border-amber-300 cursor-pointer"
           >
             {currentStep === STEPS.length - 1 ? (
               <>

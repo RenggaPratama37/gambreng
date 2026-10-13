@@ -62,20 +62,28 @@ export const SubjectPickerScreen: React.FC<SubjectPickerScreenProps> = ({
 
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex flex-col items-center justify-start p-4 max-w-2xl mx-auto">
-      {/* Header Info */}
-      <div className="text-center mb-4">
+      {/* Header Info - Translucent #5b8225 Moss Green Card */}
+      <div
+        className="text-center mb-4 p-4 sm:p-5 rounded-3xl shadow-xl border-3 border-emerald-300/80 backdrop-blur-md w-full transition-all"
+        style={{ backgroundColor: 'rgba(91, 130, 37, 0.85)' }}
+      >
         <button
           onClick={onBack}
-          className="text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 underline mb-2 block mx-auto"
+          className="text-xs font-bold text-lime-200 hover:text-white underline mb-2 block mx-auto transition-colors"
         >
           ← Kembali ke Menu
         </button>
-        <h2 className="font-heading text-2xl sm:text-3xl font-black text-slate-800 dark:text-white">
+        <h2 className="font-heading text-2xl sm:text-3xl font-black text-white drop-shadow-md mb-2">
           Pilih Mata Pelajaran
         </h2>
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium">
-          Putar Roda Keberuntungan atau langsung ketuk kartu mata pelajaran di bawah!
-        </p>
+        <div className="inline-block px-3.5 py-1.5 rounded-2xl bg-white/95 dark:bg-white/95 shadow-sm border border-emerald-200">
+          <p
+            className="text-[15px] font-bold text-[#48a600]"
+            style={{ fontSize: '15px', fontWeight: 'bold', color: '#48a600', fontFamily: 'Nunito, sans-serif' }}
+          >
+            Putar Roda Keberuntungan atau langsung ketuk kartu mata pelajaran di bawah!
+          </p>
+        </div>
       </div>
 
       {/* Subject Spinner Wheel Section */}
@@ -167,34 +175,34 @@ export const SubjectPickerScreen: React.FC<SubjectPickerScreenProps> = ({
 
       {/* Grid of Subject Cards */}
       <div className="w-full mt-5">
-        <h3 className="font-heading font-bold text-sm text-slate-700 dark:text-slate-300 mb-2.5 text-center">
-          Atau Pilih Langsung Mata Pelajaran:
+        <h3 className="font-heading font-black text-sm sm:text-base text-amber-950 dark:text-amber-100 mb-3 text-center drop-shadow-xs">
+          🌾 Atau Pilih Langsung Mata Pelajaran:
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {SUBJECTS.map((sub) => {
             const isSelected = selectedSubject?.id === sub.id;
             return (
               <button
                 key={sub.id}
                 onClick={() => handleCardClick(sub)}
-                className={`btn-chunky relative p-4 rounded-2xl border-3 text-left transition-all ${
+                className={`btn-chunky relative p-4 sm:p-5 rounded-3xl border-3 text-left transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-amber-50 dark:bg-slate-800 border-amber-500 shadow-[0_6px_0_#f59e0b] scale-[1.02]'
-                    : 'bg-white/90 dark:bg-slate-800/90 border-slate-200 dark:border-slate-700 hover:border-amber-300 shadow-[0_4px_0_rgba(0,0,0,0.06)]'
+                    ? 'bg-gradient-to-br from-amber-100 via-yellow-100 to-amber-200 dark:from-[#453723] dark:via-[#4d3d27] dark:to-[#382b1b] border-amber-500 dark:border-amber-400 shadow-[0_6px_0_#d97706] scale-[1.03] ring-2 ring-amber-300'
+                    : 'bg-white/95 dark:bg-[#342817]/90 border-amber-200 dark:border-amber-700/70 hover:border-amber-400 shadow-[0_4px_0_rgba(217,119,6,0.18)]'
                 }`}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3.5">
                   <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-inner shrink-0"
+                    className="w-13 h-13 rounded-2xl flex items-center justify-center text-2xl shadow-sm shrink-0 border border-amber-300/80 bg-white/90 dark:bg-[#4a3a23]"
                     style={{ backgroundColor: `${sub.color}22` }}
                   >
                     {sub.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-heading font-black text-base text-slate-800 dark:text-white truncate">
+                    <h4 className="font-heading font-black text-base sm:text-lg text-amber-950 dark:text-amber-100 truncate">
                       {sub.name}
                     </h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 font-medium">
+                    <p className="text-xs text-amber-800/80 dark:text-amber-200/90 line-clamp-2 mt-0.5 font-bold leading-relaxed">
                       {sub.description}
                     </p>
                   </div>

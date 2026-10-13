@@ -41,7 +41,41 @@ interface GameBoardScreenProps {
   enableLuckCards: boolean;
   onFinishGame: (finalPlayers: Player[], playDurationSec: number) => void;
   onNavigateHome: () => void;
+  darkMode?: boolean;
 }
+
+// Real board game dice face with authentic pips (dots)
+const DicePipsFace: React.FC<{ value: number }> = ({ value }) => {
+  const isPipActive = (row: number, col: number) => {
+    if (value === 1) return row === 1 && col === 1;
+    if (value === 2) return (row === 0 && col === 0) || (row === 2 && col === 2);
+    if (value === 3) return (row === 0 && col === 0) || (row === 1 && col === 1) || (row === 2 && col === 2);
+    if (value === 4) return (row === 0 || row === 2) && (col === 0 || col === 2);
+    if (value === 5) return ((row === 0 || row === 2) && (col === 0 || col === 2)) || (row === 1 && col === 1);
+    if (value === 6) return (row === 0 || row === 1 || row === 2) && (col === 0 || col === 2);
+    return false;
+  };
+
+  return (
+    <div className="w-full h-full p-1.5 sm:p-2 grid grid-cols-3 grid-rows-3 items-center justify-items-center">
+      {[0, 1, 2].map((r) =>
+        [0, 1, 2].map((c) => (
+          <div key={`${r}-${c}`} className="w-full h-full flex items-center justify-center">
+            {isPipActive(r, c) && (
+              <span
+                className={`rounded-full transition-transform ${
+                  value === 1
+                    ? 'w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 bg-rose-600 shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] scale-110'
+                    : 'w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-900 dark:bg-slate-950 shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)]'
+                }`}
+              />
+            )}
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
 
 export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
   subject,
@@ -50,6 +84,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
   enableLuckCards,
   onFinishGame,
   onNavigateHome,
+  darkMode,
 }) => {
   const [players, setPlayers] = useState<Player[]>(initialPlayers);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
@@ -411,7 +446,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
   return (
     <div className="relative min-h-[calc(100vh-60px)] p-2 sm:p-4 max-w-5xl mx-auto flex flex-col justify-between select-none">
       {/* Top Bar: One score box per player + countdown/elapsed timer */}
-      <div className="w-full bg-white/95 dark:bg-slate-900/95 rounded-2xl p-2.5 sm:p-3 shadow-md border-2 border-amber-300 dark:border-amber-500/40 mb-3 flex flex-wrap items-center justify-between gap-2">
+      <div className="w-full bg-white/95 dark:bg-[#3d2e1c]/95 rounded-2xl p-2.5 sm:p-3 shadow-md border-2 border-amber-300 dark:border-amber-500/80 mb-3 flex flex-wrap items-center justify-between gap-2">
         {/* Players Score Boxes */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
           {players.map((player, idx) => {
@@ -422,7 +457,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                 className={`flex items-center gap-2 px-2.5 py-1.5 rounded-xl border-2 transition-all shrink-0 ${
                   isTurn
                     ? 'bg-amber-100 dark:bg-amber-950/80 border-amber-500 shadow-md scale-105'
-                    : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700'
+                    : 'bg-amber-50/70 dark:bg-[#4d3c26] border-amber-200 dark:border-amber-700/80'
                 }`}
               >
                 <CharacterAvatar
@@ -433,7 +468,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                 />
                 <div className="leading-tight">
                   <div className="flex items-center gap-1">
-                    <span className="font-heading font-black text-xs text-slate-800 dark:text-white truncate max-w-[80px]">
+                    <span className="font-heading font-black text-xs text-amber-950 dark:text-amber-100 truncate max-w-[80px]">
                       {player.nickname}
                     </span>
                     {player.isFinished && (
@@ -442,9 +477,9 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-600 dark:text-slate-300">
-                    <span className="text-amber-600 dark:text-amber-400">★ {player.score}</span>
-                    <span className="text-slate-400">•</span>
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-800/80 dark:text-amber-200">
+                    <span className="text-amber-600 dark:text-amber-400 font-black">★ {player.score}</span>
+                    <span className="text-amber-400">•</span>
                     <span>Petak {player.currentTile}</span>
                   </div>
                 </div>
@@ -455,7 +490,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
 
         {/* Timer & Pause / Game Menu Button */}
         <div className="flex items-center gap-2 ml-auto">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-black border border-slate-300 dark:border-slate-700">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-100/90 dark:bg-[#4d3c26] text-amber-950 dark:text-amber-100 text-xs font-black border border-amber-300 dark:border-amber-600">
             <Clock className="w-4 h-4 text-amber-500" />
             <span>
               {timeMode === 'unlimited' ? `Waktu: ${formatTime(elapsedSeconds)}` : `Sisa: ${formatTime(secondsLeft)}`}
@@ -468,7 +503,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
               setIsPaused(true);
             }}
             title="Jeda Permainan & Menu Pilihan"
-            className="btn-chunky flex items-center gap-1.5 text-xs font-black px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-amber-950 border-2 border-amber-500 shadow-[0_2px_0_#d97706] active:translate-y-0.5"
+            className="btn-chunky flex items-center gap-1.5 text-xs font-black px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-amber-950 border-2 border-amber-500 shadow-[0_2px_0_#d97706] active:translate-y-0.5 cursor-pointer"
           >
             <Pause className="w-4 h-4 fill-current" />
             <span>Jeda</span>
@@ -478,8 +513,8 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
 
       {/* Main Board Container: Square Village-themed Board */}
       <div className="relative w-full aspect-square max-w-[580px] mx-auto bg-gradient-to-b from-sky-100 via-amber-50 to-emerald-100 dark:from-slate-800 dark:via-slate-850 dark:to-emerald-950 rounded-3xl p-3 sm:p-4 shadow-2xl border-4 border-amber-400 dark:border-amber-600 overflow-hidden">
-        {/* Village Path Illustrated Backdrop (Rice fields, bridge, river, hut, school) */}
-        <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-25">
+        {/* Village Path Illustrated Backdrop with clear winding track path connecting all tiles */}
+        <div className="absolute inset-0 pointer-events-none opacity-60 dark:opacity-45">
           <svg viewBox="0 0 500 500" className="w-full h-full">
             {/* Winding path road background */}
             <path
@@ -558,7 +593,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
       </div>
 
       {/* Bottom Control Bar: Turn Status & Dice Roller */}
-      <div className="w-full bg-white/95 dark:bg-slate-900/95 rounded-2xl p-3 sm:p-4 shadow-xl border-2 border-amber-300 dark:border-amber-500/40 mt-3 flex items-center justify-between gap-3">
+      <div className="w-full bg-white/95 dark:bg-[#3d2e1c]/95 rounded-2xl p-3 sm:p-4 shadow-xl border-2 border-amber-300 dark:border-amber-500/80 mt-3 flex items-center justify-between gap-3">
         {/* Current Turn Nickname Indicator */}
         <div className="flex items-center gap-3">
           <CharacterAvatar
@@ -568,32 +603,38 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
             ringColor={currentPlayer.color}
           />
           <div>
-            <span className="text-[10px] uppercase font-black tracking-wider text-amber-600 dark:text-amber-400 block">
+            <span className="text-[10px] uppercase font-black tracking-wider text-amber-700 dark:text-amber-300 block">
               Giliran Pemain
             </span>
-            <h3 className="font-heading font-black text-base sm:text-xl text-slate-800 dark:text-white leading-tight">
+            <h3 className="font-heading font-black text-base sm:text-xl text-amber-950 dark:text-amber-100 leading-tight">
               Giliran: {currentPlayer.nickname}
             </h3>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+            <p className="text-[11px] text-amber-800/80 dark:text-amber-200/90 font-bold">
               Petak #{currentPlayer.currentTile} • Skor: {currentPlayer.score} poin
             </p>
           </div>
         </div>
 
-        {/* Animated Dice Button */}
-        <div className="flex items-center gap-3">
+        {/* Animated Authentic Dice Button with Real Pips (Dots, Not Numbers) */}
+        <div className="flex flex-col items-center gap-1 shrink-0">
           <button
             onClick={handleRollDice}
             disabled={isRolling || isMovingPawn || activeCardType !== null || currentPlayer.isFinished}
-            className={`btn-chunky relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl font-heading font-black text-3xl sm:text-4xl transition-transform ${
+            className={`btn-chunky relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl transition-transform cursor-pointer select-none ${
               isRolling
-                ? 'bg-amber-300 text-amber-950 animate-spin border-4 border-amber-500'
-                : 'bg-gradient-to-br from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white shadow-[0_6px_0_#c2410c] border-2 border-amber-200 active:scale-95'
+                ? 'bg-gradient-to-br from-amber-100 to-amber-200 border-3 border-amber-500 animate-spin shadow-lg'
+                : 'bg-gradient-to-b from-white via-amber-50/90 to-amber-100 border-3 border-amber-400 shadow-[0_6px_0_#d97706,0_8px_16px_rgba(217,119,6,0.3)] hover:scale-105 active:translate-y-1 active:shadow-[0_2px_0_#d97706]'
             }`}
-            title="Kocok Dadu"
+            title="Kocok Dadu Berbintik"
           >
-            <span className="drop-shadow">{diceValue}</span>
+            {/* White glossy die face inside with authentic pips */}
+            <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-xl bg-white shadow-inner border border-amber-200/80 flex items-center justify-center">
+              <DicePipsFace value={diceValue} />
+            </div>
           </button>
+          <span className="text-[10px] font-black text-amber-900 dark:text-amber-200">
+            {isRolling ? 'Mengocok...' : 'Kocok Dadu!'}
+          </span>
         </div>
       </div>
 
@@ -618,10 +659,10 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
         ))}
       </div>
 
-      {/* CARD MODAL (Questions, Challenges, Story, Luck) */}
+      {/* CARD MODAL (Questions, Challenges, Story, Luck) - Warm Rural Bamboo / Clay Parchment Theme */}
       {activeCardType !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs">
-          <div className="w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-7 shadow-2xl border-4 border-amber-400 dark:border-amber-500 animate-in fade-in zoom-in-95 duration-200">
+          <div className="w-full max-w-lg bg-gradient-to-b from-[#fffef5] via-[#fef9eb] to-[#fef3c7] dark:bg-gradient-to-b dark:from-[#3a2d1d] dark:via-[#423420] dark:to-[#2e2316] rounded-3xl p-5 sm:p-7 shadow-2xl border-4 border-amber-400 dark:border-amber-500 animate-in fade-in zoom-in-95 duration-200">
             {/* Modal Header */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -631,7 +672,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                   size="sm"
                   ringColor={currentPlayer.color}
                 />
-                <span className="font-heading font-black text-xs sm:text-sm text-slate-800 dark:text-white">
+                <span className="font-heading font-black text-xs sm:text-sm text-amber-950 dark:text-amber-100">
                   Giliran: {currentPlayer.nickname}
                 </span>
               </div>
@@ -649,8 +690,8 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                 }}
                 className={`btn-chunky inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-black border ${
                   isReadingAloud
-                    ? 'bg-amber-400 text-amber-950 border-amber-500'
-                    : 'bg-sky-100 text-sky-800 border-sky-300'
+                    ? 'bg-amber-400 text-amber-950 border-amber-500 shadow-xs'
+                    : 'bg-emerald-100 text-emerald-900 border-emerald-300 dark:bg-emerald-950/80 dark:text-emerald-200'
                 }`}
               >
                 <Volume2 className="w-4 h-4" />
@@ -662,8 +703,8 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
             {activeQuestion && (
               <div>
                 {/* Level Switcher (Child may switch level before answering!) */}
-                <div className="flex items-center justify-between mb-3 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl">
-                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 pl-2">
+                <div className="flex items-center justify-between mb-3 bg-amber-100/80 dark:bg-[#4a3b26] p-1.5 rounded-2xl border border-amber-300/80 dark:border-amber-700/80">
+                  <span className="text-[11px] font-bold text-amber-800 dark:text-amber-200 pl-2">
                     Tingkat Soal:
                   </span>
                   <div className="flex gap-1">
@@ -679,7 +720,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                         className={`px-2.5 py-1 rounded-xl text-[10px] sm:text-xs font-heading font-black transition-all ${
                           selectedQuestionLevel === lvl.id
                             ? `${lvl.color} text-white shadow-xs`
-                            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
+                            : 'text-amber-800 dark:text-amber-200 hover:text-amber-950'
                         }`}
                       >
                         {lvl.label}
@@ -689,11 +730,11 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                 </div>
 
                 {/* Question Text */}
-                <div className="bg-amber-50 dark:bg-slate-800/80 p-4 rounded-2xl border border-amber-200 dark:border-slate-700 mb-4">
-                  <span className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400 block mb-1">
-                    {subject.name} • Soal {activeQuestion.type === 'oral' ? 'Diskusi Lisan' : activeQuestion.type === 'short' ? 'Isian Singkat' : 'Pilihan Ganda'}
+                <div className="bg-white/95 dark:bg-[#4d3c26] p-4 rounded-2xl border-2 border-amber-300 dark:border-amber-600 mb-4 shadow-sm">
+                  <span className="text-[10px] font-black uppercase text-amber-700 dark:text-amber-300 block mb-1">
+                    🌾 {subject.name} • Soal {activeQuestion.type === 'oral' ? 'Diskusi Lisan' : activeQuestion.type === 'short' ? 'Isian Singkat' : 'Pilihan Ganda'}
                   </span>
-                  <p className="font-heading font-bold text-base sm:text-lg text-slate-800 dark:text-white leading-snug">
+                  <p className="font-heading font-black text-base sm:text-lg text-amber-950 dark:text-amber-100 leading-snug">
                     {activeQuestion.question}
                   </p>
                 </div>
@@ -703,7 +744,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                   <div>
                     {/* Multiple Choice */}
                     {activeQuestion.type === 'choice' && activeQuestion.options && (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-4">
                         {activeQuestion.options.map((opt, i) => (
                           <button
                             key={i}
@@ -711,13 +752,13 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                               audio.playClick();
                               setSelectedOption(opt);
                             }}
-                            className={`p-3 rounded-xl border-2 font-bold text-xs sm:text-sm text-left transition-all ${
+                            className={`p-3 rounded-2xl border-2 font-bold text-xs sm:text-sm text-left transition-all cursor-pointer ${
                               selectedOption === opt
-                                ? 'bg-amber-400 border-amber-600 text-amber-950 shadow-[0_3px_0_#d97706]'
-                                : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-amber-300'
+                                ? 'bg-amber-400 border-amber-600 text-amber-950 shadow-[0_3px_0_#d97706] scale-[1.02]'
+                                : 'bg-white/95 dark:bg-[#524129] border-amber-200 dark:border-amber-700/80 hover:border-amber-400 text-amber-950 dark:text-amber-100 shadow-xs'
                             }`}
                           >
-                            <span className="mr-2 font-black">
+                            <span className="mr-2 font-black text-amber-800 dark:text-amber-300">
                               {String.fromCharCode(65 + i)}.
                             </span>
                             <span>{opt}</span>
@@ -734,14 +775,14 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                           value={shortAnswerInput}
                           onChange={(e) => setShortAnswerInput(e.target.value)}
                           placeholder="Ketik jawabanmu di sini..."
-                          className="w-full p-3 rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-bold text-sm text-slate-800 dark:text-white focus:border-amber-500 focus:outline-none"
+                          className="w-full p-3.5 rounded-2xl border-2 border-amber-300 dark:border-amber-600 bg-white dark:bg-[#524129] font-black text-sm text-amber-950 dark:text-amber-100 placeholder-amber-400 focus:border-amber-500 focus:outline-none shadow-inner"
                         />
                       </div>
                     )}
 
                     {/* Oral / Group Self-Check */}
                     {activeQuestion.type === 'oral' && (
-                      <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 text-xs sm:text-sm text-sky-900 dark:text-sky-200 mb-4">
+                      <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 text-xs sm:text-sm text-emerald-950 dark:text-emerald-200 mb-4 font-bold">
                         💡 <strong>Ayo Berdiskusi:</strong> Sampaikan jawabanmu secara lisan kepada teman di sebelahmu. Jika temanmu setuju, ketuk tombol di bawah!
                       </div>
                     )}
@@ -756,7 +797,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                           ? !shortAnswerInput.trim()
                           : false
                       }
-                      className="btn-chunky w-full py-3 px-5 rounded-2xl bg-amber-500 hover:bg-amber-600 disabled:opacity-40 text-amber-950 font-heading font-black text-base shadow-[0_4px_0_#b45309]"
+                      className="btn-chunky w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:opacity-40 text-white font-heading font-black text-base shadow-[0_5px_0_#b45309] border border-amber-300 cursor-pointer"
                     >
                       Kirim Jawaban!
                     </button>
@@ -787,13 +828,13 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                     )}
 
                     {/* Friendly Explanation */}
-                    <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm text-slate-700 dark:text-slate-300 text-left mb-4 border border-slate-200 dark:border-slate-700">
+                    <div className="p-3.5 rounded-2xl bg-white/90 dark:bg-[#4d3c26] text-xs sm:text-sm text-amber-950 dark:text-amber-100 text-left mb-4 border border-amber-200 dark:border-amber-600">
                       <strong>Penjelasan:</strong> {activeQuestion.explanation}
                     </div>
 
                     <button
                       onClick={closeCardAndNextTurn}
-                      className="btn-chunky w-full py-3 px-5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-heading font-black text-base shadow-[0_4px_0_#059669]"
+                      className="btn-chunky w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-heading font-black text-base shadow-[0_5px_0_#059669] border border-emerald-300 cursor-pointer"
                     >
                       Lanjut Giliran Berikutnya →
                     </button>
@@ -805,24 +846,24 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
             {/* B. CHALLENGE CARD (Tantangan Ilmu / Seru) */}
             {activeChallenge && (
               <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-pink-100 dark:bg-pink-950 text-3xl flex items-center justify-center mb-3">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-pink-400 to-rose-400 text-white text-3xl flex items-center justify-center mb-3 shadow-md">
                   {activeChallenge.type === 'science' ? '💡' : '🎵'}
                 </div>
-                <span className="text-xs font-black uppercase text-pink-600 dark:text-pink-400">
+                <span className="text-xs font-black uppercase text-pink-700 dark:text-pink-300">
                   {activeChallenge.type === 'science' ? 'Kartu Tantangan Ilmu' : 'Kartu Tantangan Seru'}
                 </span>
-                <h3 className="font-heading font-black text-xl text-slate-800 dark:text-white mt-1 mb-3">
+                <h3 className="font-heading font-black text-xl text-amber-950 dark:text-amber-100 mt-1 mb-3">
                   {activeChallenge.title}
                 </h3>
-                <div className="bg-pink-50 dark:bg-slate-800 p-4 rounded-2xl border border-pink-200 dark:border-slate-700 text-sm sm:text-base font-bold text-slate-800 dark:text-white mb-4">
+                <div className="bg-white/95 dark:bg-[#4d3c26] p-4 rounded-2xl border-2 border-pink-300 dark:border-pink-600 text-sm sm:text-base font-bold text-amber-950 dark:text-amber-100 mb-4">
                   {activeChallenge.task}
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mb-5 italic">
+                <p className="text-xs text-amber-800 dark:text-amber-300 mb-5 italic font-bold">
                   Petunjuk: {activeChallenge.instruction}
                 </p>
                 <button
                   onClick={handleCompleteChallenge}
-                  className="btn-chunky w-full py-3 px-5 rounded-2xl bg-pink-500 hover:bg-pink-600 text-white font-heading font-black text-base shadow-[0_4px_0_#be185d]"
+                  className="btn-chunky w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-heading font-black text-base shadow-[0_5px_0_#be185d] border border-pink-300 cursor-pointer"
                 >
                   Tantangan Selesai! (+2 Poin) 🎉
                 </button>
@@ -834,17 +875,23 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
               <div>
                 <div className="text-center mb-3">
                   <span className="text-3xl">🗺️</span>
-                  <h3 className="font-heading font-black text-lg sm:text-xl text-slate-800 dark:text-white mt-1">
+                  <h3 className="font-heading font-black text-lg sm:text-xl text-amber-950 dark:text-amber-100 mt-1">
                     {activeStory.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium mt-1">
+                  <p className="text-xs sm:text-sm text-amber-850 dark:text-amber-200 font-bold mt-1">
                     {activeStory.prompt}
+                  </p>
+                </div>
+
+                <div className="bg-white/95 dark:bg-[#4d3c26] p-4 rounded-2xl border-2 border-teal-300 dark:border-teal-600 mb-3 shadow-xs">
+                  <p className="text-xs sm:text-sm text-amber-950 dark:text-amber-100 font-bold">
+                    Ceritakan pengalaman serumu kepada teman-teman regumu secara lisan, tulis, atau peragakan!
                   </p>
                 </div>
 
                 {/* Mode Choice: "Aku bicara / Aku tulis / Aku peragakan" */}
                 <div className="mb-3">
-                  <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                  <label className="block text-[11px] font-black text-amber-900 dark:text-amber-200 mb-1">
                     Pilih Cara Berbagi Ceritamu:
                   </label>
                   <div className="grid grid-cols-3 gap-1.5">
@@ -859,10 +906,10 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                           audio.playClick();
                           setStoryAnswerMode(mode.id as any);
                         }}
-                        className={`py-2 px-1 rounded-xl text-xs font-heading font-black border transition-all ${
+                        className={`py-2 px-1 rounded-xl text-xs font-heading font-black border transition-all cursor-pointer ${
                           storyAnswerMode === mode.id
-                            ? 'bg-teal-500 text-white border-teal-600 shadow-xs'
-                            : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                            ? 'bg-teal-500 text-white border-teal-600 shadow-xs scale-102'
+                            : 'bg-white/90 dark:bg-[#524129] text-amber-950 dark:text-amber-200 border-amber-200 dark:border-amber-700'
                         }`}
                       >
                         {mode.label}
@@ -877,17 +924,17 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                     value={storyTextInput}
                     onChange={(e) => setStoryTextInput(e.target.value)}
                     placeholder="Tuliskan ceritamu di sini..."
-                    className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold mb-3 focus:outline-none"
+                    className="w-full p-2.5 rounded-xl border-2 border-teal-300 dark:border-teal-600 bg-white dark:bg-[#524129] text-xs font-bold mb-3 focus:outline-none text-amber-950 dark:text-amber-100 placeholder-teal-600"
                   />
                 )}
 
-                <p className="text-[11px] text-teal-800 dark:text-teal-300 italic mb-4 text-center">
-                  💡 Tidak ada jawaban benar atau salah dalam berbagi cerita!
+                <p className="text-[11px] text-teal-800 dark:text-teal-300 font-bold italic mb-4 text-center">
+                  💡 Tidak ada jawaban salah dalam berbagi cerita!
                 </p>
 
                 <button
                   onClick={handleCompleteStory}
-                  className="btn-chunky w-full py-3 px-5 rounded-2xl bg-teal-500 hover:bg-teal-600 text-white font-heading font-black text-base shadow-[0_4px_0_#0f766e]"
+                  className="btn-chunky w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white font-heading font-black text-base shadow-[0_5px_0_#0f766e] border border-teal-300 cursor-pointer"
                 >
                   Bagikan Cerita (+1 Poin) ✨
                 </button>
@@ -898,18 +945,18 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
             {activeLuck && (
               <div className="text-center">
                 <span className="text-4xl animate-bounce">⭐</span>
-                <span className="text-xs font-black uppercase text-purple-600 dark:text-purple-400 block mt-2">
+                <span className="text-xs font-black uppercase text-purple-700 dark:text-purple-300 block mt-2">
                   Kartu Keberuntungan
                 </span>
-                <h3 className="font-heading font-black text-xl text-slate-800 dark:text-white mt-1 mb-2">
+                <h3 className="font-heading font-black text-xl text-amber-950 dark:text-amber-100 mt-1 mb-2">
                   {activeLuck.title}
                 </h3>
-                <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 font-bold mb-5 p-4 bg-purple-50 dark:bg-slate-800 rounded-2xl border border-purple-200 dark:border-slate-700">
+                <p className="text-sm sm:text-base text-amber-950 dark:text-amber-100 font-bold mb-5 p-4 bg-white/95 dark:bg-[#4d3c26] rounded-2xl border-2 border-purple-300 dark:border-purple-600 shadow-sm">
                   {activeLuck.description}
                 </p>
                 <button
                   onClick={handleApplyLuck}
-                  className="btn-chunky w-full py-3 px-5 rounded-2xl bg-purple-500 hover:bg-purple-600 text-white font-heading font-black text-base shadow-[0_4px_0_#7e22ce]"
+                  className="btn-chunky w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-purple-500 to-fuchsia-500 hover:from-purple-600 hover:to-fuchsia-600 text-white font-heading font-black text-base shadow-[0_5px_0_#7e22ce] border border-purple-300 cursor-pointer"
                 >
                   Ambil Hadiah Keberuntungan! 🌟
                 </button>
@@ -922,15 +969,15 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
       {/* MODAL MENU PERMAINAN KETIKA DIJEDA (Pause Menu) */}
       {isPaused && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="w-full max-w-sm sm:max-w-md bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-7 shadow-2xl border-4 border-amber-400 dark:border-amber-500 text-center animate-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 mx-auto rounded-3xl bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center text-3xl mb-3 shadow-inner border-2 border-amber-300 dark:border-amber-700">
+          <div className="w-full max-w-sm sm:max-w-md bg-gradient-to-b from-[#fffef5] via-[#fef9eb] to-[#fef3c7] dark:bg-gradient-to-b dark:from-[#3a2d1d] dark:via-[#423420] dark:to-[#2e2316] rounded-3xl p-6 sm:p-7 shadow-2xl border-4 border-amber-400 dark:border-amber-500 text-center animate-in zoom-in-95 duration-200">
+            <div className="w-16 h-16 mx-auto rounded-3xl bg-amber-100 dark:bg-[#4d3c26] text-amber-700 dark:text-amber-300 flex items-center justify-center text-3xl mb-3 shadow-inner border-2 border-amber-300 dark:border-amber-600">
               ⏸️
             </div>
 
-            <h3 className="font-heading font-black text-2xl sm:text-3xl text-slate-800 dark:text-white mb-1">
+            <h3 className="font-heading font-black text-2xl sm:text-3xl text-amber-950 dark:text-amber-100 mb-1">
               Permainan Dijeda
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium mb-6">
+            <p className="text-xs sm:text-sm text-amber-800/90 dark:text-amber-200/90 font-bold mb-6">
               Permainan sedang dihentikan sementara. Silakan pilih opsi di bawah:
             </p>
 
@@ -941,7 +988,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                   audio.playClick();
                   setIsPaused(false);
                 }}
-                className="btn-chunky flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-heading font-black text-base shadow-[0_5px_0_#065f46] border border-emerald-300"
+                className="btn-chunky flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-heading font-black text-base shadow-[0_5px_0_#065f46] border border-emerald-300 cursor-pointer"
               >
                 <Play className="w-5 h-5 fill-current" />
                 <span>Lanjutkan Bermain</span>
@@ -954,7 +1001,7 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                   setIsPaused(false);
                   handleFinalRanking();
                 }}
-                className="btn-chunky flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-amber-950 font-heading font-black text-base shadow-[0_5px_0_#b45309] border border-amber-300"
+                className="btn-chunky flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-amber-950 font-heading font-black text-base shadow-[0_5px_0_#b45309] border border-amber-300 cursor-pointer"
               >
                 <Trophy className="w-5 h-5" />
                 <span>Akhiri Permainan & Lihat Juara</span>
@@ -967,9 +1014,9 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
                   setIsPaused(false);
                   onNavigateHome();
                 }}
-                className="btn-chunky flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-heading font-black text-base shadow-[0_3px_0_rgba(0,0,0,0.1)] border-2 border-slate-300 dark:border-slate-700"
+                className="btn-chunky flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl bg-amber-100 dark:bg-[#4d3c26] hover:bg-amber-200 dark:hover:bg-[#5a462d] text-amber-950 dark:text-amber-100 font-heading font-black text-base shadow-[0_3px_0_#d97706] border-2 border-amber-300 dark:border-amber-600 cursor-pointer"
               >
-                <Home className="w-5 h-5 text-amber-500" />
+                <Home className="w-5 h-5 text-amber-700 dark:text-amber-300" />
                 <span>Kembali ke Menu Utama</span>
               </button>
             </div>

@@ -31,16 +31,16 @@ export const MenuScreen: React.FC<MenuScreenProps> = ({
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex flex-col items-center justify-center p-4 max-w-lg mx-auto">
       {/* Welcome Card Panel */}
-      <div className="w-full bg-white/90 dark:bg-slate-900/90 rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-amber-300 dark:border-amber-500/50 text-center backdrop-blur-sm">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-200 text-xs font-black mb-4">
+      <div className="w-full bg-gradient-to-b from-white/95 via-[#fefbf0]/95 to-[#fef3c7]/95 dark:bg-gradient-to-b dark:from-[#3a2d1d]/95 dark:via-[#423420]/95 dark:to-[#2e2316]/95 rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 dark:border-amber-500 text-center backdrop-blur-md">
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-100 dark:bg-[#4d3c26] text-amber-900 dark:text-amber-200 text-xs font-black mb-4 border border-amber-300 dark:border-amber-600">
           <Sparkles className="w-4 h-4 text-amber-500" />
           <span>Selamat Datang di Dunia GAMBRENG!</span>
         </div>
 
-        <h2 className="font-heading text-2xl sm:text-3xl font-black text-slate-800 dark:text-white mb-2 leading-tight">
+        <h2 className="font-heading text-2xl sm:text-3xl font-black text-amber-950 dark:text-amber-100 mb-2 leading-tight">
           Pilih Aksimu Hari Ini!
         </h2>
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-8 font-medium">
+        <p className="text-sm sm:text-base text-amber-800/90 dark:text-amber-200/90 mb-8 font-bold">
           Ayo belajar bersama Maria, Andi, Boris, Ajeng, dan Lestari mengelilingi desa menuju sekolah!
         </p>
 

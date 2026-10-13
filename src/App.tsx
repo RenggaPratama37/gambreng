@@ -87,7 +87,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 relative flex flex-col ${darkMode ? 'dark bg-slate-950 text-slate-100' : 'bg-amber-50/40 text-slate-800'}`}>
+    <div className={`min-h-screen transition-colors duration-300 relative flex flex-col ${darkMode ? 'dark text-slate-100' : 'text-slate-800'}`}>
       {/* Village & Sky Illustrated Responsive Background */}
       <GameBackground screen={currentScreen} darkMode={darkMode} />
 
@@ -103,7 +103,7 @@ export default function App() {
       />
 
       {/* Main Screen Content */}
-      <main className="flex-1 w-full flex flex-col justify-center">
+      <main className="relative z-10 flex-1 w-full flex flex-col justify-center">
         <div key={currentScreen} className="animate-screen-enter w-full flex-1 flex flex-col justify-center">
           {currentScreen === 'cover' && (
             <CoverScreen onNext={() => setCurrentScreen('menu')} />
@@ -167,6 +167,7 @@ export default function App() {
               enableLuckCards={enableLuckCards}
               onFinishGame={handleFinishGame}
               onNavigateHome={() => setCurrentScreen('cover')}
+              darkMode={darkMode}
             />
           )}
 

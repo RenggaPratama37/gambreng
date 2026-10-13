@@ -189,28 +189,28 @@ export const CertificateScreen: React.FC<CertificateScreenProps> = ({
       </div>
 
       {/* Configurable School & Teacher Name Inputs (Hidden in print) */}
-      <div className="no-print bg-white/95 dark:bg-slate-900/95 rounded-2xl p-4 shadow-md border-2 border-amber-300 dark:border-amber-500/40 mb-4">
-        <div className="flex items-center gap-2 mb-2 text-xs font-black text-slate-800 dark:text-white">
+      <div className="no-print bg-white/95 dark:bg-[#3d2e1c]/95 rounded-2xl p-4 shadow-md border-2 border-amber-300 dark:border-amber-500/80 mb-4">
+        <div className="flex items-center gap-2 mb-2 text-xs font-black text-amber-950 dark:text-amber-100">
           <Edit3 className="w-4 h-4 text-amber-500" />
           <span>Pengaturan Nama Sekolah & Guru (Bisa disesuaikan langsung):</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-[11px] font-bold text-slate-500 mb-0.5">Nama Sekolah:</label>
+            <label className="block text-[11px] font-bold text-amber-800 dark:text-amber-300 mb-0.5">Nama Sekolah:</label>
             <input
               type="text"
               value={schoolName}
               onChange={(e) => onUpdateSchoolAndTeacher(e.target.value, teacherName)}
-              className="w-full px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-white focus:outline-none"
+              className="w-full px-3 py-1.5 rounded-xl border border-amber-300 dark:border-amber-600 bg-amber-50/50 dark:bg-[#4d3c26] text-xs font-bold text-amber-950 dark:text-amber-100 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-[11px] font-bold text-slate-500 mb-0.5">Nama Guru / Pembimbing:</label>
+            <label className="block text-[11px] font-bold text-amber-800 dark:text-amber-300 mb-0.5">Nama Guru / Pembimbing:</label>
             <input
               type="text"
               value={teacherName}
               onChange={(e) => onUpdateSchoolAndTeacher(schoolName, e.target.value)}
-              className="w-full px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-white focus:outline-none"
+              className="w-full px-3 py-1.5 rounded-xl border border-amber-300 dark:border-amber-600 bg-amber-50/50 dark:bg-[#4d3c26] text-xs font-bold text-amber-950 dark:text-amber-100 focus:outline-none"
             />
           </div>
         </div>
@@ -508,25 +508,25 @@ export const CertificateScreen: React.FC<CertificateScreenProps> = ({
       {/* Fallback Modal when browser blocks download in iframe */}
       {blockedImageUrl && (
         <div className="no-print fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs">
-          <div className="relative w-full max-w-xl bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl border-4 border-amber-400 text-center">
+          <div className="relative w-full max-w-xl bg-gradient-to-b from-[#fffef5] to-[#fef3c7] dark:bg-gradient-to-b dark:from-[#3a2d1d] dark:to-[#2e2316] rounded-3xl p-6 shadow-2xl border-4 border-amber-400 text-center">
             <button
               onClick={() => setBlockedImageUrl(null)}
-              className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+              className="absolute top-4 right-4 p-2 rounded-full bg-amber-100 dark:bg-[#4d3c26] text-amber-800 dark:text-amber-200 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
-            <h3 className="font-heading font-black text-xl text-slate-800 dark:text-white mb-2">
+            <h3 className="font-heading font-black text-xl text-amber-950 dark:text-amber-100 mb-2">
               Simpan Sertifikat
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-bold mb-4">
+            <p className="text-xs sm:text-sm text-amber-800 dark:text-amber-200 font-bold mb-4">
               💡 <em>Tekan lama gambar di bawah untuk menyimpan ke galerimu!</em>
             </p>
-            <div className="w-full max-h-[60vh] overflow-y-auto rounded-xl border-2 border-slate-200 mb-4 p-1">
+            <div className="w-full max-h-[60vh] overflow-y-auto rounded-xl border-2 border-amber-200 dark:border-amber-700 mb-4 p-1">
               <img src={blockedImageUrl} alt="Sertifikat" className="w-full h-auto rounded-lg" />
             </div>
             <button
               onClick={() => setBlockedImageUrl(null)}
-              className="btn-chunky w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-500 text-amber-950 font-heading font-black text-sm"
+              className="btn-chunky w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-500 text-amber-950 font-heading font-black text-sm border-2 border-amber-500 shadow-[0_3px_0_#d97706] cursor-pointer"
             >
               Tutup Pratinjau
             </button>
