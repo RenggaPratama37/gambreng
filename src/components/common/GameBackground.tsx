@@ -45,7 +45,7 @@ export const GameBackground: React.FC<GameBackgroundProps> = ({ screen, darkMode
       <div className="absolute inset-0 overflow-hidden">
         <img
           key={darkMode ? 'night' : 'day'}
-          src={`${import.meta.env.BASE_URL}${darkMode ? 'bg-peta-malam.png' : 'background.png'}`}
+          src={darkMode ? '/bg-peta-malam.png' : '/background.png'}
           alt={
             darkMode
               ? 'Pemandangan Pedesaan Sawah Indonesia Malam Hari (bg-peta-malam)'
